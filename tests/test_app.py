@@ -1,6 +1,6 @@
-from app import view
+from app import app
 
 def test_index():
-    client = view.test_client()
+    client = app.test_client()
     response = client.get('/')
     assert response.status_code == 200

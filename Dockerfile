@@ -1,16 +1,23 @@
-FROM python:3.9-alpine
+# start by pulling the python image
+FROM python:3.8-alpine
 
-WORKDIR /flask_app
+# copy the requirements file into the image
+COPY ./requirements.txt /app/requirements.txt
 
-COPY requirements.txt .
+# switch working directory
+WORKDIR /app
 
-RUN pip install --no-cache-dir -r requirements.txt
+# install the dependencies and packages in the requirements file
+RUN pip install -r requirements.txt
 
 RUN pip install pytest
 
-COPY app/ .
+# copy every content from the local file to the image
+COPY . /app
 
 COPY tests/ app/tests/
 
-CMD [ "python", "app.py" ]
+# configure the container to run in an executed manner
+ENTRYPOINT [ "python" ]
 
+CMD ["view.py" ]

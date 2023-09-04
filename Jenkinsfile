@@ -57,8 +57,6 @@ stage('Build') {
     docker pull briangomezdevops0/basic_flask_app:latest 
     docker run -d -p 6012:5000 --name my_flask_app briangomezdevops0/basic_flask_app:latest
   '''
-)
-
                 )
               ]
             )

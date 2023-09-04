@@ -27,11 +27,12 @@ pipeline {
       }
     }
 
-    stage('Test') {
-      steps {
-        sh 'docker run my-flask-app python -m pytest /flask_app/tests/'
-      }
-    }
+stage('Test') {
+  steps {
+    sh 'docker run my-flask-app python -m pytest /flask_app/tests/'
+  }
+}
+
 
     stage('Deploy') {
       steps {

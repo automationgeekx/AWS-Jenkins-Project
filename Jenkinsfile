@@ -2,11 +2,12 @@ pipeline {
   agent any
 
   stages {
-    stage('Clone GitHub Repository') {
-      steps {
-        git 'https://github.com/automationgeekx/AWS-Jenkins-Project.git'
-      }
-    }
+stage('Clone GitHub Repository') {
+  steps {
+    git branch: 'main', url: 'https://github.com/automationgeekx/AWS-Jenkins-Project.git'
+  }
+}
+
 
     stage('Build') {
       steps {
@@ -17,7 +18,7 @@ pipeline {
     
     stage('Test') {
       steps {
-        sh 'docker run my-flask-app python -m pytest app/tests/'
+        sh 'docker run my-flask-app python -m pytest AWS-Jenkins-Project/app/tests/'
       }
     }
     

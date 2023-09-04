@@ -4,15 +4,28 @@ pipeline {
 
   stages {
 
-        stage('Teardown Container') {
-      steps {
-        script {
-          // Stop and remove the Docker container running on port 6030
-          sh 'docker stop test_app || true'
-          sh 'docker rm test_app || true'
-        }
-      }
+stage('Teardown Container') {
+  steps {
+    script {
+      sshPublisher(
+        continueOnError: true, // Allow the pipeline to continue even if the commands fail
+        publishers: [
+          sshPublisherDesc(
+            configName: "dockerhost", // Replace with your SSH configuration name
+            transfers: [
+              sshTransfer(
+                execCommand: '''
+                  docker stop test_app || true
+                  docker rm test_app || true
+                '''
+              )
+            ]
+          )
+        ]
+      )
     }
+  }
+}
 
     stage('Clone GitHub Repository') {
       steps {

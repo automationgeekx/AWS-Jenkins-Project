@@ -53,8 +53,8 @@ stage('Test') {
                   removePrefix: "app", 
                   remoteDirectory: "/home/dockeradmin/my_flask_app", 
                   execCommand: '''
-                    docker pull tomcatserver:latest 
-                    docker run -d -p 6001:8080 -v /home/dockeradmin/my_flask_app:/usr/local/tomcat/webapps/ROOT tomcatserver:latest
+                    docker pull tomcat:latest 
+                    docker run -d -p 6001:8080 -v /home/dockeradmin/my_flask_app:/usr/local/tomcat/webapps/ROOT tomcat:latest
                   '''
                 )
               ]

@@ -34,29 +34,29 @@ stage('Test') {
 }
 
 
-    stage('Deploy') {
-      steps {
-        withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
-          sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
-          sh 'docker push $DOCKER_BFLASK_IMAGE'
-        }
-        
-        sshPublisher(
-          continueOnError: false, 
-          failOnError: true,
-          publishers: [
-            sshPublisherDesc(
-              configName: "dockerhost", 
-              transfers: [
-                sshTransfer(
-                  sourceFiles: "app/*", 
-                  removePrefix: "app", 
-remoteDirectory: "/home/dockeradmin/my_flask_app", 
+stage('Deploy') {
+  steps {
+    withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
+      sh "echo \$DOCKER_PASSWORD | docker login -u \$DOCKER_USERNAME --password-stdin docker.io"
+      sh 'docker push $DOCKER_BFLASK_IMAGE'
+    }
+    
+    sshPublisher(
+      continueOnError: false, 
+      failOnError: true,
+      publishers: [
+        sshPublisherDesc(
+          configName: "dockerhost", 
+          transfers: [
+            sshTransfer(
+              sourceFiles: "app/*", 
+              removePrefix: "app", 
+              remoteDirectory: "/home/dockeradmin/my_flask_app", 
               execCommand: '''
-                docker pull tomcat:latest 
-                docker run -d -p 6005:8080 -v /home/dockeradmin/my_flask_app/home/dockeradmin/my_flask_app:/usr/local/tomcat/webapps/ROOT tomcat:latest
+                docker pull my-flask-app:latest
+                docker run -d -p 6009:5000 my-flask-app:latest
               '''
-                )
+            )
               ]
             )
           ]

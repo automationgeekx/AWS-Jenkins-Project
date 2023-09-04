@@ -17,7 +17,7 @@ stage('Clone GitHub Repository') {
     
     stage('Test') {
       steps {
-        sh 'docker run my-flask-app python -m pytest AWS-Jenkins-Project/app/tests/'
+        sh 'docker run my-flask-app python -m pytest /flask_app/tests/'
       }
     }
     

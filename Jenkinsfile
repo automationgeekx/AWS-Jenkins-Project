@@ -57,7 +57,7 @@ pipeline {
                   remoteDirectory: "/home/dockeradmin/my_flask_app", 
                   execCommand: '''
                     docker pull briangomezdevops0/basic_flask_app:latest 
-                    docker run -d -p 6005:5000 -v /home/dockeradmin/my_flask_app:/flask_app/app briangomezdevops0/basic_flask_app:latest
+                    docker run -d -p 6012:5000 -v /home/dockeradmin/my_flask_app:/flask_app/app briangomezdevops0/basic_flask_app:latest
                   '''
                 )
               ]

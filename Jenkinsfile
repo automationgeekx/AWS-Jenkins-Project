@@ -49,14 +49,15 @@ stage('Build') {
             sshPublisherDesc(
               configName: "dockerhost", 
               transfers: [
-                sshTransfer(
-                  sourceFiles: "**/*", 
-                  removePrefix: "app", 
-                  remoteDirectory: "/home/dockeradmin/my_flask_app", 
-execCommand: '''
-  docker pull briangomezdevops0/basic_flask_app:latest 
-  docker run -d -p 6012:5000 --name my_flask_app briangomezdevops0/basic_flask_app:latest
-'''
+               sshTransfer(
+  sourceFiles: "**/*", 
+  removePrefix: "app", 
+  remoteDirectory: "/home/dockeradmin/my_flask_app", 
+  execCommand: '''
+    docker pull briangomezdevops0/basic_flask_app:latest 
+    docker run -d -p 6012:5000 --name my_flask_app briangomezdevops0/basic_flask_app:latest
+  '''
+)
 
                 )
               ]

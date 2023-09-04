@@ -8,8 +8,8 @@ pipeline {
       steps {
         script {
           // Stop and remove the Docker container running on port 6030
-          sh 'docker stop my_flask_app || true'
-          sh 'docker rm my_flask_app || true'
+          sh 'docker stop test_app || true'
+          sh 'docker rm test_app || true'
         }
       }
     }

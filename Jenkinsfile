@@ -50,8 +50,7 @@ stage('Build') {
               configName: "dockerhost", 
               transfers: [
                sshTransfer(
-  sourceFiles: "**/*", 
-  removePrefix: "app", 
+  sourceFiles: "**/*",
   remoteDirectory: "/home/dockeradmin/my_flask_app", 
   execCommand: '''
     docker pull briangomezdevops0/basic_flask_app:latest 

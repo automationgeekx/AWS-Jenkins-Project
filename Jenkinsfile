@@ -2,11 +2,11 @@ pipeline {
   agent any
 
   stages {
-stage('Clone GitHub Repository') {
-  steps {
-    git branch: 'main', url: 'https://github.com/briangomezdevops0/basic_flask_app.git'
-  }
-}
+    stage('Clone GitHub Repository') {
+      steps {
+        git branch: 'main', url: 'https://github.com/automationgeekx/AWS-Jenkins-Project.git'
+      }
+    }
 
 
     stage('Show Workspace') {

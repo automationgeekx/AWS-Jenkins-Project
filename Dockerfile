@@ -9,4 +9,4 @@ COPY ./tests /flask_app/tests
 RUN pip install --no-cache-dir -r requirements.txt
 RUN pip install pytest
 
-CMD [ "python", "app/app.py" ]
+CMD [ "python", "app/main.py" ]

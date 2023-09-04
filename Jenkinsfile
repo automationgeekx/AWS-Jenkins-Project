@@ -46,7 +46,7 @@ stage('Test') {
           failOnError: true,
           publishers: [
             sshPublisherDesc(
-              configName: "dockeradmin@54.224.237.99", 
+              configName: "dockerhost", 
               transfers: [
                 sshTransfer(
                   sourceFiles: "app/*", 

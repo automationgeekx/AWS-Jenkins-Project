@@ -2,41 +2,37 @@ pipeline {
   agent any
 
   stages {
-stage('Clone GitHub Repository') {
-  steps {
-    git branch: 'main', url: 'https://github.com/automationgeekx/AWS-Jenkins-Project.git'
-  }
-}
+    stage('Clone GitHub Repository') {
+      steps {
+        git branch: 'main', url: 'https://github.com/automationgeekx/AWS-Jenkins-Project.git'
+      }
+    }
 
-stage('Show Workspace') {
-  steps {
-    echo "Workspace path is: ${env.WORKSPACE}"
-  }
-}
+    stage('Show Workspace') {
+      steps {
+        echo "Workspace path is: ${env.WORKSPACE}"
+      }
+    }
 
-
-stage('List Workspace Contents') {
-  steps {
-    sh 'ls -la ${WORKSPACE}'
-  }
-}
-
-
+    stage('List Workspace Contents') {
+      steps {
+        sh 'ls -la ${WORKSPACE}'
+      }
+    }
 
     stage('Build') {
-  steps {
-    sh 'docker build -t my-flask-app .'
-    sh 'docker tag my-flask-app $DOCKER_BFLASK_IMAGE'
-  }
-}
+      steps {
+        sh 'docker build -t my-flask-app .'
+        sh 'docker tag my-flask-app $DOCKER_BFLASK_IMAGE'
+      }
+    }
 
-stage('Test') {
-  steps {
-    sh 'docker run my-flask-app python -m pytest /flask_app/tests/'
-  }
-}
+    stage('Test') {
+      steps {
+        sh 'docker run my-flask-app python -m pytest /flask_app/tests/'
+      }
+    }
 
-    
     stage('Deploy') {
       steps {
         withCredentials([usernamePassword(credentialsId: "${DOCKER_REGISTRY_CREDS}", passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
@@ -52,8 +48,8 @@ stage('Test') {
               configName: "dockeradmin@54.224.237.99", 
               transfers: [
                 sshTransfer(
-                  sourceFiles: "AWS-Jenkins-Project/app/*", 
-                  removePrefix: "AWS-Jenkins-Project", 
+                  sourceFiles: "app/*", 
+                  removePrefix: "app", 
                   remoteDirectory: "/home/dockeradmin/my_flask_app", 
                   execCommand: '''
                     docker pull tomcatserver:latest 
@@ -67,7 +63,7 @@ stage('Test') {
       }
     }
   }
-  
+
   post {
     always {
       sh 'docker logout'

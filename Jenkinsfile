@@ -1,6 +1,16 @@
 pipeline {
   agent any
 
+    stage('Teardown Container') {
+      steps {
+        script {
+          // Stop and remove the Docker container running on port 6030
+          sh 'docker stop my_flask_app || true'
+          sh 'docker rm my_flask_app || true'
+        }
+      }
+    }
+
   stages {
     stage('Clone GitHub Repository') {
       steps {
@@ -54,7 +64,7 @@ stage('Build') {
   remoteDirectory: "/home/dockeradmin/my_flask_app", 
   execCommand: '''
     docker pull briangomezdevops0/basic_flask_app:latest 
-    docker run -d -p 6030:5000 briangomezdevops0/basic_flask_app:latest
+    docker run -d -p 6030:5000 --name test_app briangomezdevops0/basic_flask_app:latest
   '''
                 )
               ]

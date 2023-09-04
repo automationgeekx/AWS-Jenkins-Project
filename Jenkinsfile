@@ -1,7 +1,10 @@
 pipeline {
   agent any
+  
 
-    stage('Teardown Container') {
+  stages {
+
+        stage('Teardown Container') {
       steps {
         script {
           // Stop and remove the Docker container running on port 6030
@@ -11,7 +14,6 @@ pipeline {
       }
     }
 
-  stages {
     stage('Clone GitHub Repository') {
       steps {
         git branch: 'main', url: 'https://github.com/automationgeekx/AWS-Jenkins-Project.git'
@@ -64,7 +66,7 @@ stage('Build') {
   remoteDirectory: "/home/dockeradmin/my_flask_app", 
   execCommand: '''
     docker pull briangomezdevops0/basic_flask_app:latest 
-    docker run -d -p 6030:5000 --name test_app briangomezdevops0/basic_flask_app:latest
+    docker run -d -p 6035:5000 --name test_app briangomezdevops0/basic_flask_app:latest
   '''
                 )
               ]

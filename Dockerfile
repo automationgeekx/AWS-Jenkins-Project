@@ -3,7 +3,7 @@ FROM python:3.9-alpine
 WORKDIR /flask_app
 
 COPY requirements.txt .
-COPY ./AWS-Jenkins-Project/app /flask_app
+COPY ./app /flask_app
 
 RUN pip install --no-cache-dir -r requirements.txt
 
